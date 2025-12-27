@@ -1,16 +1,21 @@
 package com.opencode.alumxbackend.jobposts.service;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+
+import com.opencode.alumxbackend.common.exception.BadRequestException;
+import com.opencode.alumxbackend.common.exception.ForbiddenException;
+import com.opencode.alumxbackend.common.exception.ResourceNotFoundException;
 import com.opencode.alumxbackend.jobposts.dto.JobPostRequest;
 import com.opencode.alumxbackend.jobposts.model.JobPost;
 import com.opencode.alumxbackend.jobposts.repository.JobPostRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import com.opencode.alumxbackend.users.repository.UserRepository;
-import java.time.LocalDateTime;
-import java.util.UUID;
-import java.net.MalformedURLException;
-import java.net.URL;
-import com.opencode.alumxbackend.common.exception.BadRequestException;
+
+import lombok.RequiredArgsConstructor;
 
 
 
@@ -62,5 +67,20 @@ public class JobPostServiceImpl implements JobPostService{
 
 
         return jobPostRepository.save(jobPost);
+    }
+
+    @Override
+    public void deletePostByUser(Long userId, String postId) {
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        JobPost post = jobPostRepository.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "postId", postId));
+
+        if (!post.getUsername().equals(user.getUsername())) {
+            throw new ForbiddenException("User is not the owner of the post");
+        }
+
+        jobPostRepository.delete(post);
     }
 }

@@ -5,4 +5,5 @@ import com.opencode.alumxbackend.jobposts.model.JobPost;
 
 public interface JobPostService {
     JobPost createJobPost(JobPostRequest request);
+    void deletePostByUser(Long userId, String postId);
 }
