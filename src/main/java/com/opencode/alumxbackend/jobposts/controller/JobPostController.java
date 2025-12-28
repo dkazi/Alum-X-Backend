@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+// import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class JobPostController {
     private final JobPostService jobPostService;
     private static final String DUMMY_TOKEN = "alumx-dev-token";
-    private static final Logger logger = Logger.getLogger(JobPostController.class.getName());
+    // private static final Logger logger = Logger.getLogger(JobPostController.class.getName());
 
     @GetMapping("/users/{userId}/posts")
     public ResponseEntity<List<JobPostResponse>> getPostsByUser(@PathVariable Long userId) {

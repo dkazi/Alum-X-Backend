@@ -1,7 +1,7 @@
 package com.opencode.alumxbackend.jobposts.service;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -60,9 +60,9 @@ public class JobPostServiceImpl implements JobPostService{
 
 
                 try{
-                    new URL(url); // this will chck wether hte url is coorect
+                    URI.create(url).toURL(); // this will chck whether url is correct
                 }
-                catch(MalformedURLException e){
+                catch(IllegalArgumentException | MalformedURLException e){
                     throw new BadRequestException("invalid url: " + url);
                 }
             });

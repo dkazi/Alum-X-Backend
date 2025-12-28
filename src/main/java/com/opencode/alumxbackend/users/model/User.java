@@ -1,11 +1,9 @@
 package com.opencode.alumxbackend.users.model;
 
-import com.opencode.alumxbackend.resume.model.Resume;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.List;
 
 @Entity
@@ -106,13 +104,6 @@ public class User {
     @CollectionTable(name = "user_internships", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "internship")
     private List<String> internships;
-
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Resume> resumes;
 
     @PrePersist
     protected void onCreate() {
