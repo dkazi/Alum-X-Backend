@@ -18,6 +18,8 @@ public class GroupMessageController {
 
     private final GroupMessageService service;
 
+
+    // user id sends mesesage to a group using a group id
     @PostMapping(value="/{groupId}/messages",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> sendMessage(
             @PathVariable Long groupId,
@@ -25,7 +27,7 @@ public class GroupMessageController {
     ) {
         return ResponseEntity.ok(service.sendMessage(groupId, request));
     }
-
+    // working
     @GetMapping("/{groupId}/messages")
     public List<GroupMessageResponse> getMessages(
             @PathVariable Long groupId,

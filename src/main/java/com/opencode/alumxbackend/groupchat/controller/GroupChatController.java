@@ -19,6 +19,7 @@ public class GroupChatController {
     private final GroupChatService service;
 
     // Create a group
+    // working
     @PostMapping
     public ResponseEntity<GroupChatResponse> createGroup(@Valid @RequestBody GroupChatRequest request) {
         GroupChat group = service.createGroup(request);
@@ -26,6 +27,7 @@ public class GroupChatController {
     }
 
     // Get group by groupId
+    //working
     @GetMapping("/{groupId}")
     public ResponseEntity<GroupChatResponse> getGroupById(@PathVariable Long groupId) {
         GroupChat group = service.getGroupById(groupId);
@@ -33,6 +35,7 @@ public class GroupChatController {
     }
 
     // Get all groups for a user
+    //working
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getGroupsForUser(@PathVariable String userId) {
         var groups = service.getGroupsForUser(userId)

@@ -110,6 +110,27 @@ public class User {
     @Column(name = "internship")
     private List<String> internships;
 
+    @Column(length = 1000)
+    private String about;
+
+    @Column
+    private String currentCompany;
+
+    @Column
+    private String currentRole;
+
+    @Column
+    private String location;
+
+    @Column
+    private String linkedinUrl;
+
+    @Column
+    private String githubUrl;
+
+    @Column
+    private String portfolioUrl;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

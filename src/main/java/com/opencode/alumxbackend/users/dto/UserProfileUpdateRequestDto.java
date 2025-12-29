@@ -1,20 +1,14 @@
 package com.opencode.alumxbackend.users.dto;
 
-import lombok.*;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class UserProfileDTO {
-    // Identity (safe to expose)
-    private Long id;
-    private String username;
+@Data
+public class UserProfileUpdateRequestDto {
+
+    // Basic
     private String name;
-    private String email;
 
     // Professional summary
     private String about;
@@ -44,7 +38,5 @@ public class UserProfileDTO {
 
     // Personal
     private List<String> hobbies;
-
-    // Profile status
-    private Boolean profileCompleted;
 }
+

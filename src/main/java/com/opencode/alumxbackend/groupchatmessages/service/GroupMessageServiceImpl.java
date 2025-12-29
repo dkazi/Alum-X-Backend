@@ -33,16 +33,16 @@ public class GroupMessageServiceImpl implements GroupMessageService {
         GroupChat group = groupChatRepository.findById(groupId)
                 .orElseThrow(() -> new GroupNotFoundException("Group id not found " + groupId));
 
-        group.getParticipants()
+        boolean isMember = group.getParticipants()
                 .stream()
-                .anyMatch(p -> false);
-        boolean isMember = false;
+                .anyMatch(p -> p.getUserId().equals(request.getUserId()));
+
 
         if (!isMember) {
-            throw new UserNotMemberException(request.getUserId());
+            throw new UserNotMemberException("the userID :"+ request.getUserId() + " is not a member of This Group");
         }
 
-        if (request.getContent().isEmpty()) {
+        if (request.getContent() == null || request.getContent().trim().isEmpty()) {
             throw new InvalidMessageException("Message cannot be empty");
         }
 
