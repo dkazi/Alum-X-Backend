@@ -1,8 +1,14 @@
 package com.opencode.alumxbackend.users.service;
 
+import java.util.List;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.opencode.alumxbackend.common.exception.Errors.BadRequestException;
 import com.opencode.alumxbackend.users.dto.UserProfileDTO;
 import com.opencode.alumxbackend.users.dto.UserRequest;
+import com.opencode.alumxbackend.users.dto.UserResponseDto;
 import com.opencode.alumxbackend.users.model.User;
 import com.opencode.alumxbackend.users.model.UserRole;
 import com.opencode.alumxbackend.users.repository.UserRepository;
@@ -10,10 +16,6 @@ import com.opencode.alumxbackend.users.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -85,6 +87,39 @@ public class UserServiceImpl implements UserService {
         // ));
     }
 
+    @Override
+    @Transactional
+    public List<UserResponseDto> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(this::mapToResponseDTO)
+                .toList();
+    }
+
+    private UserResponseDto mapToResponseDTO(User user) {
+        return UserResponseDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .name(user.getName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .profileCompleted(user.isProfileCompleted())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .skills(copy(user.getSkills()))
+                .education(copy(user.getEducation()))
+                .techStack(copy(user.getTechStack()))
+                .languages(copy(user.getLanguages()))
+                .frameworks(copy(user.getFrameworks()))
+                .communicationSkills(copy(user.getCommunicationSkills()))
+                .certifications(copy(user.getCertifications()))
+                .projects(copy(user.getProjects()))
+                .softSkills(copy(user.getSoftSkills()))
+                .hobbies(copy(user.getHobbies()))
+                .experience(copy(user.getExperience()))
+                .internships(copy(user.getInternships()))
+                .build();
+    }
     private UserProfileDTO mapToProfileDTO(User user) {
         return UserProfileDTO.builder()
                 .id(user.getId())
